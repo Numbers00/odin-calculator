@@ -1,19 +1,14 @@
 window.onload = () => {
-  const calcBtns = document.querySelectorAll('.calc-btn');
-  const ctrlBtns = document.querySelector('.ctrl-btns');
-  const operatorBtns = document.querySelectorAll('.operator-btn');
-  const addonBtns = document.querySelectorAll('.addon-btn');
-  const numBtns = document.querySelectorAll('.num-btn');
-
-  for (let btn in calcBtns) {
-    calcBtns[btn].addEventListener('keydown', handleKeydown);
-  }
+  document.addEventListener('keydown', handleKeydown);
+  
+  const btnsDiv = document.querySelector('.btns-div');
 }
 
+let equation = '';
 let prevNum = '';
 let currNum = '';
 
-let addon = '';
+let hasPi = false;
 let operator = '';
 
 let equalsPressed = false;
@@ -21,35 +16,35 @@ let equalsPressed = false;
 function handleKeydown(e) {
   switch (e.keyCode) {
     case (48):
-      currNum += '0';
+      document.querySelectorAll('.num-btn')[0].click();
       break;
     case (49):
-      currNum += '1';
+      document.querySelectorAll('.num-btn')[1].click();
       break;
     case (50):
-      currNum += '2';
+      document.querySelectorAll('.num-btn')[2].click();
       break;
     case (51):
-      currNum += '3';
+      document.querySelectorAll('.num-btn')[3].click();
       break;
     case (52):
-      currNum += '4';
+      document.querySelectorAll('.num-btn')[4].click();
       break;
     case (53):
-      currNum += '5';
+      document.querySelectorAll('.num-btn')[5].click();
       break;
     case (54):
-      currNum += '6';
+      document.querySelectorAll('.num-btn')[6].click();
       break;
     case (55):
-      currNum += '7';
+      document.querySelectorAll('.num-btn')[7].click();
       break;
     case (56):
       if (e.shiftKey) operator = 'x';
-      else currNum += '8';
+      else document.querySelectorAll('.num-btn')[8].click();
       break;
     case (57):
-      currNum += '9';
+      document.querySelectorAll('.num-btn')[9].click();
       break;
 
     case (8):
@@ -58,7 +53,7 @@ function handleKeydown(e) {
       break;
 
     case (80):
-      addon = Math.PI;
+      hasPi = true;
       break;
     case (190):
       if (!currNum.includes('.')) currNum += '.';
@@ -76,4 +71,40 @@ function handleKeydown(e) {
     case (191):
       operator = '÷';
   }
+}
+
+function addNum(num) {
+  if (!(num === 0 && (currNum === '' || currNum === '0'))) currNum += num;
+}
+
+function chooseOperator(op) {
+  if (operator === '') operator = op;
+  else {
+    if (prevNum !== '' && currNum !== '') operate();
+    operator = op;
+  }
+}
+
+function operate() {
+  if (hasPi) currNum *= Math.PI;
+
+  switch (operator) {
+    case ('+'):
+      prevNum = String(parseFloat(prevNum) + parseFloat(currNum));
+      currNum = '';
+      break;
+    case ('-'):
+      prevNum -= currNum;
+      currNum = '';
+      break;
+    case ('x'):
+      prevNum *= currNum;
+      currNum = '';
+      break;
+    case ('÷'):
+      prevNum /= currNum;
+      currNum = '';
+  }
+
+  equation += ` ${operator} ${prevNum}`;
 }
