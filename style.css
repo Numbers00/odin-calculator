@@ -81,6 +81,16 @@ a {
   max-width: 50px;
 }
 
+.calc-btn:hover {
+  cursor: pointer;
+}
+
+.calc-btn:active, .history-btn:active {
+  cursor: pointer;
+  transform: translateY(4px);
+  color: white;
+}
+
 .ctrl-btn {
   background-color: red;
 }
