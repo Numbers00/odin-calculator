@@ -40,7 +40,7 @@ function handleKeydown(e) {
       document.querySelectorAll('.num-btn')[7].click();
       break;
     case (56):
-      if (e.shiftKey) operator = 'x';
+      if (e.shiftKey) document.getElementById('multiply-btn').click();
       else document.querySelectorAll('.num-btn')[8].click();
       break;
     case (57):
@@ -49,32 +49,44 @@ function handleKeydown(e) {
 
     case (8):
     case (46):
-      currNum = currNum.slice(0,-1);
+      document.getElementById('del-btn').click();
       break;
 
     case (80):
-      hasPi = true;
+      document.getElementById('pi-btn');
       break;
     case (190):
-      if (!currNum.includes('.')) currNum += '.';
+      document.getElementById('decimal-btn').click();
       break;
 
     case (187):
-      if (e.shiftKey) operator = '+';
-      else equalsPressed = true;
+      if (e.shiftKey) document.getElementById('plus-btn').click();
+      else document.getElementById('equals-btn');
       break;
     case (189):
-      operator = '-';
+      document.getElementById('minus-btn').click();
     case (88):
-      operator = 'x';
+      document.getElementById('multiply-btn').click();
       break;
     case (191):
-      operator = '÷';
+      document.getElementById('divide-btn').click();
   }
 }
 
-function addNum(num) {
-  if (!(num === 0 && (currNum === '' || currNum === '0'))) currNum += num;
+function handleDelete() {
+  currNum = currNum.slice(0,-1);
+}
+
+function addDecimalPoint() {
+  if (!currNum.includes('.')) currNum += '.';
+}
+
+function addPi() {
+  hasPi = true;
+}
+
+function handleEquals() {
+  operate();
 }
 
 function chooseOperator(op) {
@@ -83,6 +95,10 @@ function chooseOperator(op) {
     if (prevNum !== '' && currNum !== '') operate();
     operator = op;
   }
+}
+
+function addNum(num) {
+  if (!(num === 0 && (currNum === '' || currNum === '0'))) currNum += num;
 }
 
 function operate() {
