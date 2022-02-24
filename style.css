@@ -91,6 +91,12 @@ a {
   color: white;
 }
 
+.active-btn {
+  cursor: pointer;
+  transform: translateY(4px);
+  color: white;
+}
+
 .ctrl-btn {
   background-color: red;
 }

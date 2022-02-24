@@ -1,50 +1,84 @@
 window.onload = () => {
-  document.addEventListener('keydown', handleKeydown);
-  
   const btnsDiv = document.querySelector('.btns-div');
+
+  const acBtn = document.getElementById('ac-btn');
+  const delBtn = document.getElementById('del-btn');
+
+  const percentBtn = document.getElementById('percent-btn');
+  const decimalBtn = document.getElementById('decimal-btn');
+
+  const plusBtn = document.getElementById('plus-btn');
+  const minusBtn = document.getElementById('minus-btn');
+  const multiplyBtn = document.getElementById('multiply-btn');
+  const divideBtn = document.getElementById('divide-btn');
+  
+  const equalsBtn = document.getElementById('equals-btn');
+
+  //btnsDiv.addEventListener('click', updateDisplay);
+
+  acBtn.addEventListener('click', handleClear);
+  delBtn.addEventListener('click', handleDelete);
+
+  percentBtn.addEventListener('click', handlePercent);
+  decimalBtn.addEventListener('click', addDecimalPoint);
+
+  plusBtn.addEventListener('click', chooseOperator);
+  minusBtn.addEventListener('click', chooseOperator);
+  multiplyBtn.addEventListener('click', chooseOperator);
+  divideBtn.addEventListener('click', chooseOperator);
+
+  equalsBtn.addEventListener('click', operate);
+
+  const numBtns = document.querySelectorAll('.num-btn');
+
+  for (let i = 0; i < numBtns.length; i++) {
+    numBtns[i].addEventListener('click', addNum);
+  }
+
+  document.addEventListener('keydown', handleKeydown);
+
+  handleClear();
 }
 
 let equation = '';
 let prevNum = '';
 let currNum = '';
 
-let hasPi = false;
 let operator = '';
-
-let equalsPressed = false;
 
 function handleKeydown(e) {
   switch (e.keyCode) {
     case (48):
-      document.querySelectorAll('.num-btn')[0].click();
+      document.getElementById('num0-btn').click();
       break;
     case (49):
-      document.querySelectorAll('.num-btn')[1].click();
+      document.getElementById('num1-btn').click();
       break;
     case (50):
-      document.querySelectorAll('.num-btn')[2].click();
+      document.getElementById('num2-btn').click();
       break;
     case (51):
-      document.querySelectorAll('.num-btn')[3].click();
+      document.getElementById('num3-btn').click();
       break;
     case (52):
-      document.querySelectorAll('.num-btn')[4].click();
+      document.getElementById('num4-btn').click();
       break;
     case (53):
-      document.querySelectorAll('.num-btn')[5].click();
+      if (e.shiftKey) document.getElementById('percent-btn').click();
+      document.getElementById('num5-btn').click();
       break;
     case (54):
-      document.querySelectorAll('.num-btn')[6].click();
+      document.getElementById('num6-btn').click();
       break;
     case (55):
-      document.querySelectorAll('.num-btn')[7].click();
+      document.getElementById('num7-btn').click();
       break;
     case (56):
       if (e.shiftKey) document.getElementById('multiply-btn').click();
-      else document.querySelectorAll('.num-btn')[8].click();
+      else document.getElementById('num8-btn').click();
       break;
     case (57):
-      document.querySelectorAll('.num-btn')[9].click();
+      document.getElementById('num9-btn').click();
       break;
 
     case (8):
@@ -53,74 +87,150 @@ function handleKeydown(e) {
       break;
 
     case (80):
-      document.getElementById('pi-btn');
+      document.getElementById('percent-btn').click();
       break;
+
     case (190):
       document.getElementById('decimal-btn').click();
       break;
 
     case (187):
       if (e.shiftKey) document.getElementById('plus-btn').click();
-      else document.getElementById('equals-btn');
+      else document.getElementById('equals-btn').click();
       break;
     case (189):
       document.getElementById('minus-btn').click();
+      break;
     case (88):
       document.getElementById('multiply-btn').click();
       break;
     case (191):
       document.getElementById('divide-btn').click();
+      break;
+    
+    case (13):
+      document.getElementById('equals-btn').click();
   }
+}
+
+function updateDisplay() {
+  if (equation.includes('undefined')) equation = '';
+  if (currNum.includes('undefined')) currNum = '';
+
+  if (currNum === '') currNum = '0';
+
+  document.querySelector('.equation-display').textContent = equation;
+  document.querySelector('.curr-display').textContent = currNum;
+}
+
+function handleClear() {
+  equation = '';
+  prevNum = '';
+  currNum = '0';
+
+  operator = '';
+
+  updateDisplay();
 }
 
 function handleDelete() {
   currNum = currNum.slice(0,-1);
+
+  updateDisplay();
 }
 
-function addDecimalPoint() {
-  if (!currNum.includes('.')) currNum += '.';
-}
+function handlePercent() {
+  currNum = String(currNum / 100);
 
-function addPi() {
-  hasPi = true;
-}
+  updateDisplay();
 
-function handleEquals() {
   operate();
 }
 
-function chooseOperator(op) {
-  if (operator === '') operator = op;
-  else {
-    if (prevNum !== '' && currNum !== '') operate();
-    operator = op;
+function addDecimalPoint() {
+  if (!currNum.includes('.')) {
+    currNum += '.';
+
+    updateDisplay();
   }
 }
 
-function addNum(num) {
-  if (!(num === 0 && (currNum === '' || currNum === '0'))) currNum += num;
+function chooseOperator(e) {
+  op = e.target.textContent;
+
+  if (operator === '') {
+    if (equation === '') equation += ` ${currNum}`;
+
+    prevNum = currNum;
+    currNum = '';
+
+    operator = op;
+
+    equation += ` ${op}`;
+
+    updateDisplay();
+  }
+  else {
+    if (prevNum !== '' && currNum !== '0') {
+      operate();
+
+      if (equation === '') equation += ` ${currNum}`;
+
+      prevNum = currNum;
+      currNum = '';
+
+      operator = op;
+
+      equation += ` ${op}`;
+    }
+    else {
+      equation = equation.slice(0,-1);
+      operator = op;
+
+      equation += ` ${op}`;
+
+      updateDisplay();
+    }
+  }
+}
+
+function addNum(e) {
+  num = e.target.textContent;
+
+  if (currNum === '0') {
+    if (num !== '0') {
+      currNum = num;
+    }
+  } else currNum += num;
+  updateDisplay();
 }
 
 function operate() {
-  if (hasPi) currNum *= Math.PI;
+  equation += ` ${currNum}`;
 
   switch (operator) {
     case ('+'):
-      prevNum = String(parseFloat(prevNum) + parseFloat(currNum));
-      currNum = '';
+      currNum = String(parseFloat(prevNum) + parseFloat(currNum));
+      prevNum = '';
       break;
     case ('-'):
-      prevNum -= currNum;
-      currNum = '';
+      currNum = String(prevNum - currNum);
+      prevNum = '';
       break;
     case ('x'):
-      prevNum *= currNum;
-      currNum = '';
+      currNum = String(prevNum * currNum);
+      prevNum = '';
       break;
     case ('÷'):
-      prevNum /= currNum;
-      currNum = '';
+      currNum = String(prevNum / currNum);
+      prevNum = '';
   }
 
-  equation += ` ${operator} ${prevNum}`;
+  operator = '';
+
+  equation += ` = ${currNum}`;
+
+  updateDisplay();
+
+  equation = '';
 }
