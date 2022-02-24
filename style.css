@@ -143,6 +143,28 @@ a {
   font-size: 18px;
 }
 
+.history-div {
+  margin: 0 auto 10px auto;
+  min-height: 370px;
+  max-height: 370px;
+  min-width: 225px;
+  max-width: 225px;
+}
+
+.history-ul {
+  min-height: 100%;
+  max-height: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.history-ul li {
+  min-width: 100%;
+  max-width: 100%;
+}
+
 .right-div {
   margin-right: 5%;
   align-self: center;
