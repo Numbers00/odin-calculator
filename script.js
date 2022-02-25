@@ -117,6 +117,11 @@ function handleKeydown(e) {
   }
 }
 
+// Credits: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toExponential
+function expo(x, f) {
+  return Number.parseFloat(x).toExponential(f);
+}
+
 function updateDisplay() {
   if (currNum === '') currNum = '0';
   console.log(equation + ' , ' + currNum);
@@ -200,12 +205,14 @@ function chooseOperator(e) {
 function addNum(e) {
   num = e.target.textContent;
 
-  if (currNum === '0') {
-    if (num !== '0') {
-      currNum = num;
-    }
-  } else currNum += num;
-  updateDisplay();
+  if (currNum.length <= 16) {
+    if (currNum === '0') {
+      if (num !== '0') {
+        currNum = num;
+      }
+    } else currNum += num;
+    updateDisplay();
+  }
 }
 
 function operate() {
@@ -231,14 +238,17 @@ function operate() {
 
   operator = '';
 
+  //currNum = Math.round((parseFloat(currNum) + parseFloat(currNum).EPSILON) * 1000)
+  //console.log(currNum);
+
+  if (currNum.length > 16) currNum = expo(currNum);
+
   equation += ` = ${currNum}`;
 
   const li = document.createElement('li');
   li.textContent = equation;
 
   document.querySelector('.history-ul').prepend(li);
-
-  //console.log(equation);
 
   updateDisplay();
 
