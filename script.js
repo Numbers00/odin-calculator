@@ -36,8 +36,6 @@ window.onload = () => {
   }
 
   document.addEventListener('keydown', handleKeydown);
-
-  handleClear();
 }
 
 let equation = '';
@@ -47,6 +45,8 @@ let currNum = '';
 let operator = '';
 
 function handleKeydown(e) {
+  e.preventDefault();
+
   switch (e.keyCode) {
     case (48):
       document.getElementById('num0-btn').click();
@@ -114,22 +114,21 @@ function handleKeydown(e) {
 }
 
 function updateDisplay() {
-  if (equation.includes('undefined')) equation = '';
-  if (currNum.includes('undefined')) currNum = '';
-
   if (currNum === '') currNum = '0';
+  console.log(equation + ' , ' + currNum);
 
   document.querySelector('.equation-display').textContent = equation;
   document.querySelector('.curr-display').textContent = currNum;
 }
 
 function handleClear() {
+  console.log('cleared');
   equation = '';
   prevNum = '';
   currNum = '0';
 
   operator = '';
-
+  
   updateDisplay();
 }
 
@@ -229,6 +228,13 @@ function operate() {
   operator = '';
 
   equation += ` = ${currNum}`;
+
+  const li = document.createElement('li');
+  li.textContent = equation;
+
+  document.querySelector('.history-div').prepend(li);
+
+  //console.log(equation);
 
   updateDisplay();
 
