@@ -40,6 +40,7 @@ window.onload = () => {
   }
 
   document.addEventListener('keydown', handleKeydown);
+  document.addEventListener('keyup', handleKeyup);
 }
 
 let equation = '';
@@ -54,72 +55,167 @@ function handleKeydown(e) {
   switch (e.keyCode) {
     case (48):
       document.getElementById('num0-btn').click();
+      document.getElementById('num0-btn').classList.add('calc-btn-active');
       break;
     case (49):
       document.getElementById('num1-btn').click();
+      document.getElementById('num1-btn').classList.add('calc-btn-active');
       break;
     case (50):
       document.getElementById('num2-btn').click();
+      document.getElementById('num2-btn').classList.add('calc-btn-active');
       break;
     case (51):
       document.getElementById('num3-btn').click();
+      document.getElementById('num3-btn').classList.add('calc-btn-active');
       break;
     case (52):
       document.getElementById('num4-btn').click();
+      document.getElementById('num4-btn').classList.add('calc-btn-active');
       break;
     case (53):
-      if (e.shiftKey) document.getElementById('percent-btn').click();
+      if (e.shiftKey) {
+        document.getElementById('percent-btn').click();
+        document.getElementById('percent-btn').classList.add('calc-btn-active');
+      }
       document.getElementById('num5-btn').click();
+      document.getElementById('num5-btn').classList.add('calc-btn-active');
       break;
     case (54):
       document.getElementById('num6-btn').click();
+      document.getElementById('num6-btn').classList.add('calc-btn-active');
       break;
     case (55):
       document.getElementById('num7-btn').click();
+      document.getElementById('num7-btn').classList.add('calc-btn-active');
       break;
     case (56):
-      if (e.shiftKey) document.getElementById('multiply-btn').click();
-      else document.getElementById('num8-btn').click();
+      if (e.shiftKey) {
+        document.getElementById('multiply-btn').click();
+        document.getElementById('multiply-btn').classList.add('calc-btn-active');
+      }
+      else {
+        document.getElementById('num8-btn').click();
+        document.getElementById('num8-btn').classList.add('calc-btn-active');
+      }
       break;
     case (57):
       document.getElementById('num9-btn').click();
+      document.getElementById('num9-btn').classList.add('calc-btn-active');
       break;
 
     case (8):
     case (46):
       document.getElementById('del-btn').click();
+      document.getElementById('del-btn').classList.add('calc-btn-active');
       break;
 
     case (80):
       document.getElementById('percent-btn').click();
+      document.getElementById('percent-btn').classList.add('calc-btn-active');
       break;
 
     case (190):
       document.getElementById('decimal-btn').click();
+      document.getElementById('decimal-btn').classList.add('calc-btn-active');
       break;
 
     case (187):
-      if (e.shiftKey) document.getElementById('plus-btn').click();
-      else document.getElementById('equals-btn').click();
+      if (e.shiftKey) {
+        document.getElementById('plus-btn').click();
+        document.getElementById('plus-btn').classList.add('calc-btn-active');
+      }
+      else {
+        document.getElementById('equals-btn').click();
+        document.getElementById('equals-btn').classList.add('calc-btn-active');
+      }
       break;
     case (189):
       document.getElementById('minus-btn').click();
+      document.getElementById('minus-btn').classList.add('calc-btn-active');
       break;
     case (88):
       document.getElementById('multiply-btn').click();
+      document.getElementById('multiply-btn').classList.add('calc-btn-active');
       break;
     case (191):
       document.getElementById('divide-btn').click();
+      document.getElementById('divide-btn').classList.add('calc-btn-active');
       break;
     
     case (13):
       document.getElementById('equals-btn').click();
+      document.getElementById('equals-btn').classList.add('calc-btn-active');
   }
 }
 
-// Credits: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toExponential
-function expo(x, f) {
-  return Number.parseFloat(x).toExponential(f);
+function handleKeyup(e) {
+  e.preventDefault();
+
+  switch (e.keyCode) {
+    case (48):
+      document.getElementById('num0-btn').classList.remove('calc-btn-active');
+      break;
+    case (49):
+      document.getElementById('num1-btn').classList.remove('calc-btn-active');
+      break;
+    case (50):
+      document.getElementById('num2-btn').classList.remove('calc-btn-active');
+      break;
+    case (51):
+      document.getElementById('num3-btn').classList.remove('calc-btn-active');
+      break;
+    case (52):
+      document.getElementById('num4-btn').classList.remove('calc-btn-active');
+      break;
+    case (53):
+      if (e.shiftKey) document.getElementById('percent-btn').classList.remove('calc-btn-active');
+      document.getElementById('num5-btn').classList.remove('calc-btn-active');
+      break;
+    case (54):
+      document.getElementById('num6-btn').classList.remove('calc-btn-active');
+      break;
+    case (55):
+      document.getElementById('num7-btn').classList.remove('calc-btn-active');
+      break;
+    case (56):
+      if (e.shiftKey) document.getElementById('multiply-btn').classList.remove('calc-btn-active');
+      else document.getElementById('num8-btn').classList.remove('calc-btn-active');
+      break;
+    case (57):
+      document.getElementById('num9-btn').classList.remove('calc-btn-active');
+      break;
+
+    case (8):
+    case (46):
+      document.getElementById('del-btn').classList.remove('calc-btn-active');
+      break;
+
+    case (80):
+      document.getElementById('percent-btn').classList.remove('calc-btn-active');
+      break;
+
+    case (190):
+      document.getElementById('decimal-btn').classList.remove('calc-btn-active');
+      break;
+
+    case (187):
+      if (e.shiftKey) document.getElementById('plus-btn').classList.remove('calc-btn-active');
+      else document.getElementById('equals-btn').classList.remove('calc-btn-active');
+      break;
+    case (189):
+      document.getElementById('minus-btn').classList.remove('calc-btn-active');
+      break;
+    case (88):
+      document.getElementById('multiply-btn').classList.remove('calc-btn-active');
+      break;
+    case (191):
+      document.getElementById('divide-btn').classList.remove('calc-btn-active');
+      break;
+    
+    case (13):
+      document.getElementById('equals-btn').classList.remove('calc-btn-active');
+  }
 }
 
 function updateDisplay() {
@@ -238,10 +334,7 @@ function operate() {
 
   operator = '';
 
-  //currNum = Math.round((parseFloat(currNum) + parseFloat(currNum).EPSILON) * 1000)
-  //console.log(currNum);
-
-  if (currNum.length > 16) currNum = expo(currNum);
+  if (currNum.length > 16) currNum = String(parseFloat(currNum).toExponential(2));
 
   equation += ` = ${currNum}`;
 

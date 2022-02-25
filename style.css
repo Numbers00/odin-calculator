@@ -85,7 +85,7 @@ a {
   cursor: pointer;
 }
 
-.calc-btn:active, .history-btn:active {
+.calc-btn:active, .calc-btn-active, .history-btn:active {
   cursor: pointer;
   transform: translateY(4px);
   color: white;
