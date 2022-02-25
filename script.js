@@ -14,6 +14,8 @@ window.onload = () => {
   
   const equalsBtn = document.getElementById('equals-btn');
 
+  const historyClearBtn = document.getElementById('history-clear-btn');
+
   //btnsDiv.addEventListener('click', updateDisplay);
 
   acBtn.addEventListener('click', handleClear);
@@ -28,6 +30,8 @@ window.onload = () => {
   divideBtn.addEventListener('click', chooseOperator);
 
   equalsBtn.addEventListener('click', operate);
+
+  historyClearBtn.addEventListener('click', handleClearHistory);
 
   const numBtns = document.querySelectorAll('.num-btn');
 
@@ -232,11 +236,19 @@ function operate() {
   const li = document.createElement('li');
   li.textContent = equation;
 
-  document.querySelector('.history-div').prepend(li);
+  document.querySelector('.history-ul').prepend(li);
 
   //console.log(equation);
 
   updateDisplay();
 
   equation = '';
+}
+
+function handleClearHistory() {
+  const historyUl = document.querySelector('.history-ul');
+
+  while (historyUl.lastElementChild) {
+    historyUl.removeChild(historyUl.lastElementChild);
+  }
 }
